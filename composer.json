@@ -15,9 +15,12 @@
                 "type": "https",
                 "reference": "master"
             },
-    "autoload": {
-	    "psr-0" : {
-	        "Cmtz\\Migrator" : "src"
-	    }
-    }
+		    "autoload": {
+			    "psr-0" : {
+			        "Cmtz\\Migrator" : "src"
+			    }
+		    }
+		}
+	}
+	]
 }
