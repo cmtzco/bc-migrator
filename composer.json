@@ -3,10 +3,10 @@
     "description": "Bigcommerce Migrations and Interfacing made easy",
     "require": {
         "bigcommerce/api": "^2.0",
-        "autoload": {
-			    "psr-0" : {
-			        "Cmtz\\Migrator" : "src"
-			    }
-		    }
+	    "autoload": {
+	        "psr-0" : {
+	            "Cmtz\\Migrator" : "src"
+	        }
+    	}
     }
 }
