@@ -41,6 +41,8 @@ class migrator {
 		print_r($csvFileHeaderMap);
 		return $csvFileHeaderMap;
 	}
+
+	// CREATE 
 	function createCustomFields($productID, $customFieldName, $customFieldText){
 		if(isset($productID) && !empty($productID)){
 			try {
@@ -58,6 +60,7 @@ class migrator {
 			echo "No Product ID to Update";
 		}
 	}
+
 	//this is a test parser.  Do not use without some modification. 
 	function tempParseCSV($csvFile){
 
@@ -80,6 +83,16 @@ class migrator {
 		}
 		echo "All Custom Fields Added";
 			
+	}
+
+	// READ
+	function getBrands($productID){
+		$product = Bigcommerce::getProduct($productID);
+		$brandID = $product->brand_id;
+		echo '<pre>';
+		var_dump($brandID);
+		echo '</pre>';
+
 	}
 
 }
