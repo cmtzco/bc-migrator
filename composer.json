@@ -1,0 +1,5 @@
+{
+    "require": {
+        "bigcommerce/api": "^2.0"
+    }
+}
