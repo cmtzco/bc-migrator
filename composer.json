@@ -4,4 +4,20 @@
     "require": {
         "bigcommerce/api": "^2.0"
     }
+    "repositories": [
+    {
+        "type": "package",
+        "package": {
+            "name": "cmtz/bc-migrator",
+            "version": "0.0.1-beta",
+            "source": {
+                "url": "https://github.com/mrMuffins/bc-migrator.git",
+                "type": "https",
+                "reference": "master"
+            },
+    "autoload": {
+	    "psr-0" : {
+	        "Cmtz\\Migrator" : "src"
+	    }
+    }
 }
