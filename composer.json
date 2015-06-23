@@ -1,4 +1,6 @@
 {
+	"name": "cmtz/bc-migrator",
+    "description": "Bigcommerce Migrations and Interfacing made easy",
     "require": {
         "bigcommerce/api": "^2.0"
     }
