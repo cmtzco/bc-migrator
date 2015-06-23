@@ -1,5 +1,6 @@
 <?php
 require 'vendor/autoload.php';
+namespace Cmtz\Migrator
 use Bigcommerce\Api\Client as Bigcommerce;
 
 class migrator {
