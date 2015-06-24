@@ -87,6 +87,37 @@ class migrator {
 			
 	}
 
+	/**
+	 * Parse CSV File
+	 * @param  string $csvFile    Path to CSV File
+	 * @param  array $csvHeaders CSV Headers
+	 * @return array/bool
+	 */
+	function parseCSV($csvFile, $csvHeaders) {
+		$csvFileHandle = fopen($csvFile, 'r');
+	
+		$products = [];
+
+		while(($data = fgetcsv($csvFileHandle, 0, ',')) !== FALSE) {
+			$csvData = [];
+
+			foreach($data as $key => $value) {
+				$csvData[$csvHeaders[$key]] = $value;
+			}
+
+			if(isset($csvData) && !empty($csvData)) {
+				$products[] = $csvData;
+			}
+		}
+
+		// Return Products If Found
+		if(!isset($products) && empty($products)) {
+			return FALSE;
+		} else {
+			return $products;
+		}
+	}
+
 	// READ
 	function getProductBrand($productID){
 		$product = Bigcommerce::getProduct($productID);
