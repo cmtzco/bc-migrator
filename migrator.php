@@ -94,15 +94,21 @@ class migrator {
 	 * @return array/bool
 	 */
 	function parseCSV($csvFile, $csvHeaders) {
-		$csvFileHandle = fopen($csvFile, 'r');
-	
 		$products = [];
+		$rowCount = 0;
+
+		$csvFileHandle = fopen($csvFile, 'r');
 
 		while(($data = fgetcsv($csvFileHandle, 0, ',')) !== FALSE) {
+			$rowCount++;
 			$csvData = [];
 
+			// If Header Row -- Skip
+			if($rowCount === 1)
+				continue;
+
 			foreach($data as $key => $value) {
-				$csvData[$csvHeaders[$key]] = $value;
+				$csvData[$csvHeaders[$key]] = trim($value);
 			}
 
 			if(isset($csvData) && !empty($csvData)) {
