@@ -4,7 +4,7 @@ require 'vendor/autoload.php';
 
 use Bigcommerce\Api\Client as Bigcommerce;
 
-class migrator {
+class migrator extends Bigcommerce{
 
 	function basicAuth($storeUrl, $username, $apiKey) {
 		Bigcommerce::configure(array(
@@ -91,12 +91,32 @@ class migrator {
 	function getProductBrand($productID){
 		$product = Bigcommerce::getProduct($productID);
 		$brandID = $product->brand_id;
-		$brand = Bigcommerce::getBrand($brandID)->name;
-		15264  
+		if($brandID != 0 && !empty($brandID)){
+			$brand = Bigcommerce::getBrand($brandID)->name;
+		}
+		else {
+			$brand = "No Brand Assigned";
+		}
+		return $brand;
+		
+	}
+ 
+	function getProductIDs(){
 
+		$count = Bigcommerce::getProductsCount();
+		$pages = ceil($count / 250);
+
+		for ($i = 1; $i <= $pages; $i++) {
+			$products = Bigcommerce::getProducts(array(
+			  "page" => $i, "limit" => 250)
+			);
+			foreach($products as $product){
+				$productIDs[] = $product->id;
+			}
+		}
+		return $productIDs;
 	}
 
-	// UPDATE
 
 }
 
