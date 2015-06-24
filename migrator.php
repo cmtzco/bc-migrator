@@ -93,35 +93,49 @@ class migrator {
 	 * @param  array $csvHeaders CSV Headers
 	 * @return array/bool
 	 */
-	function parseCSV($csvFile, $csvHeaders) {
+	function parseCSV($csvFile) {
 		$products = [];
-		$rowCount = 0;
 
-		$csvFileHandle = fopen($csvFile, 'r');
+		$csvFileHandle = fopen($csvFile,'r');
+		$csvFileHeaders = fgetcsv($csvFileHandle);
+		$csvFileHeaderMap = array();
+
+		foreach($csvFileHeaders as $key => $currentHeader) {
+		    $header = str_replace(' ' , '_' , trim(strtolower($currentHeader)));
+		    
+			if(!in_array($header, $csvFileHeaderMap)) {
+				$csvFileHeaderMap[$key] = $header;
+			} else {
+				$csvFileHeaderMap[$key] = $header . '_attr';
+			}
+
+		}
+
+		$rowCount = 0;
 
 		while(($data = fgetcsv($csvFileHandle, 0, ',')) !== FALSE) {
 			$rowCount++;
-			$csvData = [];
 
-			// If Header Row -- Skip
 			if($rowCount === 1)
 				continue;
 
+			$csvRow = [];
+
 			foreach($data as $key => $value) {
-				$csvData[$csvHeaders[$key]] = trim($value);
+				$csvRow[$csvFileHeaderMap[$key]] = trim($value);
 			}
 
-			if(isset($csvData) && !empty($csvData)) {
-				$products[] = $csvData;
+			if(isset($csvRow) && !empty($csvRow)) {
+				$products[$csvRow['stock_number']] = $csvRow;
 			}
 		}
 
-		// Return Products If Found
 		if(!isset($products) && empty($products)) {
 			return FALSE;
 		} else {
 			return $products;
 		}
+		
 	}
 
 	// READ
