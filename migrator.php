@@ -92,12 +92,11 @@ class migrator {
 		$product = Bigcommerce::getProduct($productID);
 		$brandID = $product->brand_id;
 		$brand = Bigcommerce::getBrand($brandID)->name;
-		echo '<pre>';
-		var_dump($brandID);
-		var_dump($brand);
-		echo '</pre>';
+		15264  
 
 	}
+
+	// UPDATE
 
 }
 
