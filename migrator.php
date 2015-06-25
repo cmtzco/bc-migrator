@@ -93,7 +93,7 @@ class migrator {
 	 * @param  array $csvHeaders CSV Headers
 	 * @return array/bool
 	 */
-	function parseCSV($csvFile) {
+	function parseCSV($csvFile, $skuColumn) {
 		$products = [];
 
 		$csvFileHandle = fopen($csvFile,'r');
@@ -126,7 +126,12 @@ class migrator {
 			}
 
 			if(isset($csvRow) && !empty($csvRow)) {
-				$products[$csvRow['stock_number']] = $csvRow;
+				if(isset($csvRow[$skuColumn]) && !empty($csvRow[$skuColumn])) {
+					$products[$csvRow[$skuColumn]] = $csvRow;		
+				} else {
+					echo 'SKU Column Not Found in CSV. Please Check Again.' . PHP_EOL;
+					die();
+				}
 			}
 		}
 
