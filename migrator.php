@@ -138,6 +138,26 @@ class migrator {
 		
 	}
 
+	/**
+	 * Get Product SKUs
+	 * @param  array $products Array of products received from the CSV file -- The parseCSV function will set the product SKU to the array KEY
+	 * @return array/bool
+	 */
+	function getSkus($products) {
+		$SKUs = [];
+
+		foreach($products as $SKU => $product) {
+			$SKUs[] = $SKU;	
+		}
+
+		if(!isset($SKUs) && empty($SKUs)) {
+			return FALSE;
+		} else {
+			return $SKUs;
+		}
+		
+	}
+
 	// READ
 	function getProductBrand($productID){
 		$product = Bigcommerce::getProduct($productID);
