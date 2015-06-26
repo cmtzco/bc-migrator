@@ -4,7 +4,7 @@ require 'vendor/autoload.php';
 
 use Bigcommerce\Api\Client as Bigcommerce;
 
-class migrator extends Bigcommerce{
+class migrator extends Bigcommerce {
 
 	function basicAuth($storeUrl, $username, $apiKey) {
 		Bigcommerce::configure(array(
@@ -12,8 +12,7 @@ class migrator extends Bigcommerce{
 		    'username'  => $username,
 		    'api_key'   => $apiKey
 		));
-		Bigcommerce::setCipher('RC4-SHA');
-		
+		Bigcommerce::setCipher('RC4-SHA');	
 	}
 	function checkSSL($bool){
 		Bigcommerce::verifyPeer($bool);
@@ -23,13 +22,15 @@ class migrator extends Bigcommerce{
 
 		if ($ping && !empty($ping)) {
 			echo $ping->format('H:i:s') . "\n";
-			echo "Connected!";
+			echo "Connected!\n";
 			return true;
 		} 
 		else { 
-			return "Could Not Connect! Check Credentials. "; 
+			echo "Could Not Connect! Check Credentials. ";
+			return false; 
 		}
 	}
+	
 	function parseCSVHeaders($csvFile){
 
 		$csvFileHandle = fopen($csvFile,'r');
@@ -76,9 +77,9 @@ class migrator extends Bigcommerce{
 	
 		$lastProduct = NULL;
 		while(($data = fgetcsv($csvFileHandle, 0, ',')) !== false) {
-			$productID = $data[$csvFileHeaderMap['ProductID']];
-			$universalFit = $data[$csvFileHeaderMap['UniversalFit']];
-			$fieldCreator = self::createCustomFields($productID, 'Universal Fit', $universalFit);
+			$productID = $data[$csvFileHeaderMap['id']];
+			$location = $data[$csvFileHeaderMap['location']];
+			$fieldCreator = self::createCustomFields($productID, 'location', $location);
 			echo '<pre>';
 			var_dump($fieldCreator);
 			echo '</pre>';
@@ -102,22 +103,37 @@ class migrator extends Bigcommerce{
 	}
  
 	function getProductIDs(){
-
 		$count = Bigcommerce::getProductsCount();
 		$pages = ceil($count / 250);
+		$productIDs = [];
 
 		for ($i = 1; $i <= $pages; $i++) {
 			$products = Bigcommerce::getProducts(array(
 			  "page" => $i, "limit" => 250)
 			);
+
+			if(Bigcommerce::getRequestsRemaining() <= 5000) {
+				echo PHP_EOL . 'Remaining Requests: ' . Bigcommerce::getRequestsRemaining() . '.... Sleeping';
+				sleep(100);
+			}
+
 			foreach($products as $product){
-				$productIDs[] = $product->id;
+				$productIDs[] = $product->id;	
 			}
 		}
 		return $productIDs;
 	}
 
-
+	function checkRemainingRequest(){
+		if(Bigcommerce::getRequestsRemaining() <= 5000) {
+			echo PHP_EOL . 'Remaining Requests: ' . Bigcommerce::getRequestsRemaining() . '.... Sleeping';
+			sleep(500);
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
 }
 
 
