@@ -1,7 +1,7 @@
+./migrator.php
 config.php
 customFields.php
 endResult_api.csv
-./migrator.php
 options_cron.php
 query_result.csv
 vendor.bak/
