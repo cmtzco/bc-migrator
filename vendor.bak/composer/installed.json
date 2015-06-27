@@ -1,0 +1,53 @@
+[
+    {
+        "name": "bigcommerce/api",
+        "version": "2.0.7",
+        "version_normalized": "2.0.7.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/bigcommerce/bigcommerce-api-php.git",
+            "reference": "cf034e331735c48a136841e3946b953a6e2e4b47"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/bigcommerce/bigcommerce-api-php/zipball/cf034e331735c48a136841e3946b953a6e2e4b47",
+            "reference": "cf034e331735c48a136841e3946b953a6e2e4b47",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "require-dev": {
+            "codeless/jugglecode": "1.0",
+            "phpunit/phpunit": "3.7",
+            "satooshi/php-coveralls": "dev-master"
+        },
+        "time": "2013-11-11 23:35:23",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "Bigcommerce": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Bigcommerce",
+                "homepage": "http://www.bigcommerce.com"
+            }
+        ],
+        "description": "Enables PHP applications to communicate with the Bigcommerce API.",
+        "homepage": "http://developer.bigcommerce.com",
+        "keywords": [
+            "api",
+            "business",
+            "ecommerce",
+            "http",
+            "rest"
+        ]
+    }
+]
