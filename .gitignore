@@ -5,3 +5,4 @@ endResult_api.csv
 options_cron.php
 query_result.csv
 vendor.bak/
+/vendor/

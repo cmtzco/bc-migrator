@@ -1,0 +1,16 @@
+{
+    "name": "cmtz/bc-migrator",
+    "description": "A PHP Library that allows you to interface with the Bigcommerce API with some added functions.",
+    "type": "composer",
+    "require": {
+        "bigcommerce/api": "dev-master"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Chris Martinez Kristy Miller",
+            "email": "m9157317614@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}
