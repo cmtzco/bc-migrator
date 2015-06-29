@@ -37,10 +37,10 @@ class migrator {
 		$csvFileHeaderMap = array();
 
 		foreach($csvFileHeaders as $key => $currentHeader) {
-		    $csvFileHeaderMap[trim($currentHeader)] = $key;
+		    // $csvFileHeaderMap[trim($currentHeader)] = $key;
+		    $csvFileHeaderMap[$key] = trim($currentHeader);
 		}
-		echo "\r\nHeaders\r\n";
-		print_r($csvFileHeaderMap);
+
 		return $csvFileHeaderMap;
 	}
 
@@ -161,6 +161,25 @@ class migrator {
 			return $SKUs;
 		}
 		
+	}
+
+	function getTestData($products) {
+		$data = [];
+
+		foreach($products as $SKU => $product) {
+			$data[$SKU] = array(
+				'sku'          => $SKU,
+				'catname'      => $product['powersport_type_catname'],
+				'manufacture'  => $product['manufacture'],
+				'product_name' => $product['product_name'],
+			);
+		}
+
+		if(isset($data) && !empty($data)) {
+			return $data;
+		} else {
+			return FALSE;
+		}
 	}
 
 	// READ

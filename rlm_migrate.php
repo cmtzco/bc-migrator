@@ -15,41 +15,40 @@ $csvPath = './data/' . $options['csv'] . '.csv';
 if(isset($csvPath) && !empty($csvPath)) {
 	// $csvHeaders = $migrator->parseCSVHeaders($csvPath);
 	$products = $migrator->parseCSV($csvPath, str_replace(' ', '_', strtolower($options['sku_column'])));
-	$product_skus = $migrator->getSkus($products);
-
-	var_dump($products);
-	die();
+	// $productSKUs = $migrator->getSkus($products);
+	$productData = $migrator->getTestData($products);
 
 	$availableColors = ['Acid','Black','Blue','Camo','Clear','Fatigue','Gold','Green','Orange','Pink','Poler','Red','Silver','Smoke','White','Yellow'];
 
+	echo 'Product Count: ' . count($products);
+
+	$groupedProducts = [];
+
 	if(isset($products) && !empty($products)) {
 		foreach($products as $sku => $product) {
-			// if($product['stock_number'] !== 'OR3176')
-				// continue;
-				
-			// $skus[] = $skus;
 
-			/** Check For Size In Title **/
-			/* $size = '';
-			$sizeRegEx = '/([0-9]*)[x][0-9]*([a-z]{2})\b/i';
+			// All SKUs Associated With THis Product
+			$allSkus = [];
 
-			preg_match($sizeRegEx, $product['product_name'], $sizeMatches);
-			if(isset($matches) && !empty($matches)) {
-				$size = $matches[0];
-			} */
-
-			/** Check For Colors In Title**/
-			/* $productColor = '';
-			
-			foreach($availableColors as $color) {
-				if(strpos(strtolower($product['product_name']), strtolower($color)) !== FALSE) {
-					$productColor = $color;
-					$productName = trim(str_replace($color, '', $product['product_name']));
-
-					var_dump($productName);
+			foreach($productData as $productSKU => $testData) {
+				if(strstr($productSKU, $sku) !== FALSE) {
+					if($testData['catname'] === $product['powersport_type_catname'] && $testData['manufacture'] === $product['manufacture']) {
+						$allSkus[$sku] = array(
+							'sku'  => $productSKU,
+							'name' => $testData['product_name']
+						);	
+					}
 				}
 			}
+
+			if(isset($allSkus) && !empty($allSkus)) {
+				$groupedProducts[] = $allSkus;
+			}
+			
 		}
+
+
+		print_r($groupedProducts);
 	}
 	
 }
